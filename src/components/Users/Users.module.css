@@ -1,0 +1,12 @@
+.active {
+    font-weight: bold;
+}
+
+
+.float {
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
