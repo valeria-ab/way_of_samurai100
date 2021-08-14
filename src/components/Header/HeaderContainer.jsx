@@ -5,8 +5,8 @@ import * as axios from "axios";
 
 import Preloader from "../common/Preloader/Preloader";
 import Header from "./Header";
-import {getAuthUserData, setAuthUserData, toggleIsFetching} from "../../redux/auth-reducer";
-import {authAPI} from "../../api/api";
+import {getAuthUserData, logout, setAuthUserData, toggleIsFetching} from "../../redux/auth-reducer";
+
 
 
 export class HeaderContainer extends React.Component {
@@ -48,7 +48,8 @@ const MapDispatchToProps = (dispatch) => {
 export default connect(MapStateToProps, {
     setAuthUserData,
     toggleIsFetching,
-    getAuthUserData
+    getAuthUserData,
+    logout
 })(HeaderContainer)
 
 

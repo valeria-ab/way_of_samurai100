@@ -82,7 +82,7 @@ dispatch(setUsers(users))
 }*/
 
 export default compose(
-    //withAuthRedirect,
+    withAuthRedirect,
     connect(MapStateToProps, {
         followSuccess,
         unfollowSuccess,

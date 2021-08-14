@@ -1,5 +1,6 @@
-import {authAPI, userAPI} from "../api/api";
-import {setTotalUsersCount, setUsers} from "./users-reducer";
+import {authAPI} from "../api/api";
+
+import {stopSubmit} from "redux-form";
 
 const initialState = {
     userId: null,
@@ -15,8 +16,7 @@ const authReducer = (state = initialState, action) => {
         case "SET_AUTH_USER_DATA": {
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
+                ...action.payload
             }
         }
             case "TOGGLE_IS_FETCHING": {
@@ -37,10 +37,10 @@ export const toggleIsFetching = (fetching) => ({
 })
 
 
-export const setAuthUserData = ( userId, email, login) => ({
+export const setAuthUserData = ( userId, email, login, isAuth) => ({
     type: "SET_AUTH_USER_DATA",
-    data: {
-        userId, email, login
+    payload: {
+        userId, email, login, isAuth
     }
 })
 
@@ -50,11 +50,39 @@ export const getAuthUserData = () => {
             .then(data => {
                 if (data.resultCode === 0) {
                     let {id, email,login} = data.data;
-                    dispatch(setAuthUserData(id, email, login))
+                    dispatch(setAuthUserData(id, email, login, true))
                 }
             })
     }
 }
+
+export const login = (email, password, rememberMe) => (dispatch) => {
+
+        authAPI.login(email, password, rememberMe)
+            .then(data => {
+                if (data.resultCode === 0) {
+                  dispatch(getAuthUserData())
+                } else {
+                    let message = data.message.length > 0 ? data.messages[0] : "Something is wrong";
+                    let action = stopSubmit("login", {_error: message})
+                    dispatch(action)
+                }
+            })
+
+    }
+
+
+export const logout = () => {
+    return (dispatch) => {
+        authAPI.logout()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(getAuthUserData(null, null, null, false))
+                }
+            })
+    }
+}
+
 
 
 export default authReducer;
