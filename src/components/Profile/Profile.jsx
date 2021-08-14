@@ -1,6 +1,6 @@
 import React from 'react';
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import Preloader from "../common/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
 
 const Profile = (props) => {

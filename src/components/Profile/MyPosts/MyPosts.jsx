@@ -3,6 +3,10 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {AddPostAC, UpdateNewPostTextAC} from "../../../redux/profile-reducer";
 import {Field, Form, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../utils/validators/validators";
+import {Textarea} from "../../common/FormsControls/FormsControls";
+
+const maxLength10 = maxLengthCreator(10);
 
 const MyPosts = (props) => {
     const addNewPost = (values) => {
@@ -43,7 +47,8 @@ const AddNewPostForm = (props) => {
             <div>
                 <Field placeholder="type your post..."
                        name={"newPostText"}
-                       component={"textarea"}
+                       component={Textarea}
+                       validate={[required, maxLength10]}
                 />
             </div>
             <button>Add post</button>
