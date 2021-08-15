@@ -17,7 +17,11 @@ export class ProfileContainer extends React.Component {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = this.props.authorizedUserId
+            userId = this.props.authorizedUserId;
+            if(!userId) {
+                //redirect по-бырому
+                this.props.history.push("/login")
+            }
         }
         this.props.getProfileInfoThunkCreator(userId)
         this.props.getProfileStatusThunkCreator(userId)
